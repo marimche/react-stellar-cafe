@@ -112,7 +112,7 @@ export const BurgerConstructor = () => {
             </Button>
             <div style={{ overflow: 'hidden' }}>
               {visible && (
-                <Modal header="Внимание!" onClose={handleCloseOrderDetails}>
+                <Modal onClose={handleCloseOrderDetails}>
                   <OrderDetails />
                 </Modal>
               )}
