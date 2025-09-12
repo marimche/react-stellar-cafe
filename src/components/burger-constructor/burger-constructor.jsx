@@ -4,33 +4,14 @@ import {
   CurrencyIcon,
   DragIcon,
 } from '@krgaa/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Modal } from '../modals/modal';
 import { OrderDetails } from '../order-details/order-details';
 
 import styles from './burger-constructor.module.css';
 
-export const BurgerConstructor = () => {
-  const url = 'https://norma.nomoreparties.space/api/ingredients ';
-
-  const [ingredients, setIngredients] = useState([]);
-  const [bun, setBun] = useState({});
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
-
-  useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((ingredients) => {
-        setIngredients(ingredients.data);
-        setBun(getBun(ingredients.data));
-        setSelectedIngredients(getSelectedIngredients(ingredients.data));
-      })
-      .catch((error) => {
-        throw error;
-      });
-  }, []);
-
+export const BurgerConstructor = ({ ingredients }) => {
   const [visible, setVisible] = useState(false);
 
   const handleOpenOrderDetails = () => {
@@ -46,9 +27,10 @@ export const BurgerConstructor = () => {
     return buns[0];
   };
 
-  const getSelectedIngredients = (ingredients) => {
-    return ingredients.filter((ingredient) => ingredient.type !== 'bun');
-  };
+  const bun = getBun(ingredients);
+  const selectedIngredients = ingredients.filter(
+    (ingredient) => ingredient.type !== 'bun'
+  );
 
   return (
     <section className={styles.burger_constructor} id="react-modals">

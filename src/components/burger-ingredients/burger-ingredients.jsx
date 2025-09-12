@@ -1,27 +1,9 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = () => {
-  const url = 'https://norma.nomoreparties.space/api/ingredients ';
-
-  const [ingredients, setIngredients] = useState([]);
-  const [ingredientsByTypes, setIngredientsByTypes] = useState({});
-
-  useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((ingredients) => {
-        setIngredients(ingredients.data);
-        setIngredientsByTypes(filterIngredientsByTypes(ingredients.data));
-      })
-      .catch((error) => {
-        throw error;
-      });
-  }, []);
-
+export const BurgerIngredients = ({ ingredients }) => {
   const filterIngredientsByTypes = (ingredients) => {
     const ingredientsByTypes = {};
     ingredients.forEach((ingredient) => {
@@ -33,6 +15,8 @@ export const BurgerIngredients = () => {
     return ingredientsByTypes;
   };
 
+  const ingredientsByTypes = filterIngredientsByTypes(ingredients);
+
   return (
     <section className={styles.burger_ingredients}>
       <nav>
@@ -40,12 +24,11 @@ export const BurgerIngredients = () => {
           <Tab
             value="bun"
             // active={true}
-            onClick={(e, v) => {
+            onClick={() => {
               document.getElementById('bun').scrollIntoView({
                 behavior: 'smooth',
                 inline: 'nearest',
               });
-              console.log(v);
             }}
           >
             Булки
