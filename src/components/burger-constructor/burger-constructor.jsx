@@ -15,12 +15,16 @@ export const BurgerConstructor = () => {
   const url = 'https://norma.nomoreparties.space/api/ingredients ';
 
   const [ingredients, setIngredients] = useState([]);
+  const [bun, setBun] = useState({});
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   useEffect(() => {
     fetch(url)
       .then((response) => response.json())
       .then((ingredients) => {
         setIngredients(ingredients.data);
+        setBun(getBun(ingredients.data));
+        setSelectedIngredients(getSelectedIngredients(ingredients.data));
       })
       .catch((error) => {
         throw error;
@@ -37,6 +41,15 @@ export const BurgerConstructor = () => {
     setVisible(false);
   };
 
+  const getBun = (ingredients) => {
+    const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
+    return buns[0];
+  };
+
+  const getSelectedIngredients = (ingredients) => {
+    return ingredients.filter((ingredient) => ingredient.type !== 'bun');
+  };
+
   return (
     <section className={styles.burger_constructor} id="react-modals">
       {ingredients?.length > 0 && (
@@ -46,9 +59,9 @@ export const BurgerConstructor = () => {
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text="Краторная булка N-200i (верх)"
-                price={200}
-                thumbnail={ingredients[0].image}
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image}
               />
             </div>
             <div
@@ -60,7 +73,7 @@ export const BurgerConstructor = () => {
                 height: '465px',
               }}
             >
-              {ingredients.map((ingredient) => {
+              {selectedIngredients.map((ingredient) => {
                 return (
                   <div key={ingredient._id}>
                     <DragIcon type="primary" />
@@ -77,9 +90,9 @@ export const BurgerConstructor = () => {
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text="Краторная булка N-200i (низ)"
-                price={200}
-                thumbnail={ingredients[0].image}
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image}
               />
             </div>
           </div>

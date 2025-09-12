@@ -40,11 +40,12 @@ export const BurgerIngredients = () => {
           <Tab
             value="bun"
             // active={true}
-            onClick={() => {
+            onClick={(e, v) => {
               document.getElementById('bun').scrollIntoView({
                 behavior: 'smooth',
                 inline: 'nearest',
               });
+              console.log(v);
             }}
           >
             Булки
