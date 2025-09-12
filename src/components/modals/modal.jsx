@@ -1,4 +1,5 @@
 import { CloseIcon } from '@krgaa/react-developer-burger-ui-components';
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ModalOverlay } from './modal-overlay';
@@ -8,7 +9,20 @@ import styles from './modal.module.css';
 const modalRoot = document.getElementById('root');
 
 export const Modal = ({ children, onClose, header }) => {
-  console.log('modal', header);
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('mousemove', handleKeyDown);
+    };
+  }, []);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      onClose();
+    }
+  };
+
   return ReactDOM.createPortal(
     <>
       <div className={styles.main}>
