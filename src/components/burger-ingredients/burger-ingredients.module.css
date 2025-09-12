@@ -4,7 +4,7 @@
   max-width: 600px;
   color: var(--text-primary-color);
   font-family: 'Jet Brains Mono', serif;
-  height: 765px;
+  height: 100%;
 }
 
 .menu {
@@ -19,7 +19,6 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: 40px;
   overflow: auto;
 }
 
