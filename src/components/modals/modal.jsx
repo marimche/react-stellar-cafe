@@ -26,7 +26,10 @@ export const Modal = ({ children, onClose, header }) => {
   return ReactDOM.createPortal(
     <>
       <div className={styles.main}>
-        <div className={`mt-15 mr-10 ${styles.modal_header}`}>
+        <div
+          className={`mt-15 mr-10 ml-10 ${styles.modal_header}`}
+          style={{ justifyContent: header ? 'space-between' : 'end' }}
+        >
           {header && <p className="text text_type_main-large">{header}</p>}
           <CloseIcon type="primary" onClick={onClose} />
         </div>

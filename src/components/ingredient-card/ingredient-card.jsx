@@ -2,9 +2,9 @@ import { CurrencyIcon, Counter } from '@krgaa/react-developer-burger-ui-componen
 
 import styles from './ingredient-card.module.css';
 
-export const IngredientCard = ({ ingredient, count }) => {
+export const IngredientCard = ({ ingredient, count, onClick }) => {
   return (
-    <div key={ingredient._id} className={styles.igredient_details}>
+    <div key={ingredient._id} className={styles.igredient_details} onClick={onClick}>
       <img className={styles.image} src={ingredient.image}></img>
       <div className={styles.price}>
         <p className="text text_type_digits-default">{ingredient.price}</p>

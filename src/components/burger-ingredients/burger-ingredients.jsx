@@ -1,9 +1,24 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
+import { useState } from 'react';
+
+import { IngredientDetails } from '../ingredient-details/ingredien-details';
+import { Modal } from '../modals/modal';
 
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients = ({ ingredients }) => {
+  const [visible, setVisible] = useState(false);
+  const [currentIngredient, setCurrentIngredient] = useState({});
+
+  const handleCloseIngredientDetails = () => {
+    setVisible(false);
+  };
+
+  const handleOpenIngredientDetails = () => {
+    setVisible(true);
+  };
+
   const filterIngredientsByTypes = (ingredients) => {
     const ingredientsByTypes = {};
     ingredients.forEach((ingredient) => {
@@ -66,7 +81,14 @@ export const BurgerIngredients = ({ ingredients }) => {
               <p className="text text_type_main-medium">Булки</p>
               <div className={styles.items}>
                 {ingredientsByTypes['bun'].map((ingredient) => (
-                  <IngredientCard key={ingredient._id} ingredient={ingredient} />
+                  <IngredientCard
+                    key={ingredient._id}
+                    ingredient={ingredient}
+                    onClick={() => {
+                      setCurrentIngredient(ingredient);
+                      handleOpenIngredientDetails();
+                    }}
+                  />
                 ))}
               </div>
             </li>
@@ -78,6 +100,10 @@ export const BurgerIngredients = ({ ingredients }) => {
                     key={ingredient._id}
                     ingredient={ingredient}
                     count={1}
+                    onClick={() => {
+                      setCurrentIngredient(ingredient);
+                      handleOpenIngredientDetails();
+                    }}
                   />
                 ))}
               </div>
@@ -86,13 +112,27 @@ export const BurgerIngredients = ({ ingredients }) => {
               <p className="text text_type_main-medium">Соусы</p>
               <div className={styles.items}>
                 {ingredientsByTypes['sauce'].map((ingredient) => (
-                  <IngredientCard key={ingredient._id} ingredient={ingredient} />
+                  <IngredientCard
+                    key={ingredient._id}
+                    ingredient={ingredient}
+                    onClick={() => {
+                      setCurrentIngredient(ingredient);
+                      handleOpenIngredientDetails();
+                    }}
+                  />
                 ))}
               </div>
             </li>
           </ul>
         </div>
       )}
+      <div style={{ overflow: 'hidden' }}>
+        {visible && (
+          <Modal header="Детали ингредиента" onClose={handleCloseIngredientDetails}>
+            <IngredientDetails currentIngredient={currentIngredient} />
+          </Modal>
+        )}
+      </div>
     </section>
   );
 };
