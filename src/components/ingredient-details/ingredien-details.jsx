@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styles from './ingredient-details.module.css';
 
 export const IngredientDetails = ({ currentIngredient }) => {
@@ -38,4 +40,8 @@ export const IngredientDetails = ({ currentIngredient }) => {
       </div>
     </>
   );
+};
+
+IngredientDetails.propTypes = {
+  currentIngredient: PropTypes.object,
 };

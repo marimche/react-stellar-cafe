@@ -1,4 +1,5 @@
 import { CurrencyIcon, Counter } from '@krgaa/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 import styles from './ingredient-card.module.css';
 
@@ -23,4 +24,10 @@ export const IngredientCard = ({ ingredient, count, onClick }) => {
       )}
     </div>
   );
+};
+
+IngredientCard.propTypes = {
+  ingredients: PropTypes.object,
+  count: PropTypes.number,
+  onClick: PropTypes.func,
 };

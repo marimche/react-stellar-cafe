@@ -1,5 +1,6 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import { IngredientDetails } from '../ingredient-details/ingredien-details';
@@ -135,4 +136,8 @@ export const BurgerIngredients = ({ ingredients }) => {
       </div>
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.object,
 };

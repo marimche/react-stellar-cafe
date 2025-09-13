@@ -4,6 +4,7 @@ import {
   CurrencyIcon,
   DragIcon,
 } from '@krgaa/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import { Modal } from '../modals/modal';
@@ -104,4 +105,8 @@ export const BurgerConstructor = ({ ingredients }) => {
       )}
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.object,
 };
