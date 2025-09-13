@@ -108,5 +108,5 @@ export const BurgerConstructor = ({ ingredients }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.object,
+  ingredients: PropTypes.arrayOf(PropTypes.object),
 };

@@ -139,5 +139,5 @@ export const BurgerIngredients = ({ ingredients }) => {
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.object,
+  ingredients: PropTypes.arrayOf(PropTypes.object),
 };
