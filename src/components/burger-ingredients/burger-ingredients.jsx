@@ -39,7 +39,6 @@ export const BurgerIngredients = ({ ingredients }) => {
         <ul className={styles.menu}>
           <Tab
             value="bun"
-            // active={true}
             onClick={() => {
               document.getElementById('bun').scrollIntoView({
                 behavior: 'smooth',

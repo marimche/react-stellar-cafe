@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styles from './ingredient-details.module.css';
 
 export const IngredientDetails = ({ currentIngredient }) => {
-  console.log(currentIngredient);
   return (
     <>
       <div className={styles.image_container}>
