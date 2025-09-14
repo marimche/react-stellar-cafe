@@ -13,7 +13,12 @@ export const App = () => {
 
   useEffect(() => {
     fetch(url)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка ${response.status}`);
+      })
       .then((ingredients) => {
         setIngredients(ingredients.data);
       })
