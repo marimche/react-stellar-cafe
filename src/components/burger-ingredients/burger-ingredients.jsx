@@ -126,7 +126,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           </ul>
         </div>
       )}
-      <div style={{ overflow: 'hidden' }}>
+      <div className={styles.modal_container}>
         {visible && (
           <Modal header="Детали ингредиента" onClose={handleCloseIngredientDetails}>
             <IngredientDetails currentIngredient={currentIngredient} />
