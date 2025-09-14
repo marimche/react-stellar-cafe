@@ -37,8 +37,8 @@ export const BurgerConstructor = ({ ingredients }) => {
     <section className={styles.burger_constructor} id="react-modals">
       {ingredients?.length > 0 && (
         <div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ marginLeft: '24px' }}>
+          <div className={styles.burger_ingredients}>
+            <div className="ml-6">
               <ConstructorElement
                 type="top"
                 isLocked={true}
@@ -47,15 +47,7 @@ export const BurgerConstructor = ({ ingredients }) => {
                 thumbnail={bun.image}
               />
             </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-                overflow: 'auto',
-                height: '465px',
-              }}
-            >
+            <div className={styles.internal_ingredients}>
               {selectedIngredients.map((ingredient) => {
                 return (
                   <div key={ingredient._id}>
@@ -69,7 +61,7 @@ export const BurgerConstructor = ({ ingredients }) => {
                 );
               })}
             </div>
-            <div style={{ marginLeft: '24px' }}>
+            <div className="ml-6">
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
@@ -93,7 +85,7 @@ export const BurgerConstructor = ({ ingredients }) => {
             >
               Нажми на меня
             </Button>
-            <div style={{ overflow: 'hidden' }}>
+            <div className={styles.modal_container}>
               {visible && (
                 <Modal onClose={handleCloseOrderDetails}>
                   <OrderDetails />
