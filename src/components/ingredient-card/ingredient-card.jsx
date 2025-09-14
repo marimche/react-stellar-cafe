@@ -6,7 +6,7 @@ import styles from './ingredient-card.module.css';
 export const IngredientCard = ({ ingredient, count, onClick }) => {
   return (
     <div key={ingredient._id} className={styles.igredient_details} onClick={onClick}>
-      <img className={styles.image} src={ingredient.image}></img>
+      <img className={styles.image} src={ingredient.image} alt={ingredient.name}></img>
       <div className={styles.price}>
         <p className="text text_type_digits-default">{ingredient.price}</p>
         <CurrencyIcon type="primary" />
