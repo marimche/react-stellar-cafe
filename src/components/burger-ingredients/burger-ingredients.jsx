@@ -1,7 +1,7 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import { IngredientDetails } from '../ingredient-details/ingredien-details';
 import { Modal } from '../modals/modal';
@@ -11,6 +11,10 @@ import styles from './burger-ingredients.module.css';
 export const BurgerIngredients = ({ ingredients }) => {
   const [visible, setVisible] = useState(false);
   const [currentIngredient, setCurrentIngredient] = useState({});
+
+  const bunRef = useRef(null);
+  const mainRef = useRef(null);
+  const sauceRef = useRef(null);
 
   const handleCloseIngredientDetails = () => {
     setVisible(false);
@@ -40,10 +44,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           <Tab
             value="bun"
             onClick={() => {
-              document.getElementById('bun').scrollIntoView({
-                behavior: 'smooth',
-                inline: 'nearest',
-              });
+              bunRef.current.scrollIntoView({ behavior: 'smooth' });
             }}
           >
             Булки
@@ -52,10 +53,7 @@ export const BurgerIngredients = ({ ingredients }) => {
             value="main"
             active={false}
             onClick={() => {
-              document.getElementById('main').scrollIntoView({
-                behavior: 'smooth',
-                inline: 'nearest',
-              });
+              mainRef.current.scrollIntoView({ behavior: 'smooth' });
             }}
           >
             Начинки
@@ -64,10 +62,7 @@ export const BurgerIngredients = ({ ingredients }) => {
             value="sauce"
             active={false}
             onClick={() => {
-              document.getElementById('sauce').scrollIntoView({
-                behavior: 'smooth',
-                inline: 'nearest',
-              });
+              sauceRef.current.scrollIntoView({ behavior: 'smooth' });
             }}
           >
             Соусы
@@ -77,7 +72,7 @@ export const BurgerIngredients = ({ ingredients }) => {
       {ingredients?.length > 0 && (
         <div className={`${styles.items} mt-10`}>
           <ul className={styles.list}>
-            <li id="bun">
+            <li id="bun" ref={bunRef}>
               <p className="text text_type_main-medium">Булки</p>
               <div className={styles.items}>
                 {ingredientsByTypes['bun'].map((ingredient) => (
@@ -92,7 +87,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                 ))}
               </div>
             </li>
-            <li id="main">
+            <li id="main" ref={mainRef}>
               <p className="text text_type_main-medium">Начинки</p>
               <div className={styles.items}>
                 {ingredientsByTypes['main'].map((ingredient) => (
@@ -108,7 +103,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                 ))}
               </div>
             </li>
-            <li id="sauce">
+            <li id="sauce" ref={sauceRef}>
               <p className="text text_type_main-medium">Соусы</p>
               <div className={styles.items}>
                 {ingredientsByTypes['sauce'].map((ingredient) => (
