@@ -4,6 +4,7 @@
   max-width: 600px;
   color: var(--text-primary-color);
   font-family: 'Jet Brains Mono', serif;
+  height: 840px;
 }
 
 .menu {
@@ -12,4 +13,21 @@
   padding: 0;
   text-align: center;
   list-style-type: none;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
+.list {
+  list-style-type: none;
+  padding-left: 0;
+  overflow: hidden;
+}
+
+.modal_container {
+  overflow: hidden;
 }

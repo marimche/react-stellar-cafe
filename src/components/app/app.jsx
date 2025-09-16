@@ -1,11 +1,32 @@
+import { useEffect, useState } from 'react';
+
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import { ingredients } from '@utils/ingredients';
 
 import styles from './app.module.css';
 
 export const App = () => {
+  const url = 'https://norma.nomoreparties.space/api/ingredients ';
+
+  const [ingredients, setIngredients] = useState([]);
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка ${response.status}`);
+      })
+      .then((ingredients) => {
+        setIngredients(ingredients.data);
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }, []);
+
   return (
     <div className={styles.app}>
       <AppHeader />

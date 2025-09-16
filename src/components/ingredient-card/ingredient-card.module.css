@@ -1,0 +1,34 @@
+.igredient_details {
+    width: 272px;
+    height: 208px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: relative;
+}
+
+.igredient_details .image {
+    width: 240px;
+    height: 120px;
+    position: relative;
+    display: block;
+    margin: 0 auto 0;
+}
+
+.igredient_details .price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.igredient_details .name {
+    text-align: center;
+}
+
+.igredient_details .counter {
+    position: relative;
+    width: 16px;
+    left: 240px;
+    top: -160px;
+}

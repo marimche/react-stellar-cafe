@@ -1,0 +1,14 @@
+.modal_header{
+    display: flex;
+    justify-content: end; 
+    align-items: center; 
+}
+
+.text {
+    text-align: center;
+}
+
+.img_container {
+    display: flex;
+    justify-content: center;
+}
