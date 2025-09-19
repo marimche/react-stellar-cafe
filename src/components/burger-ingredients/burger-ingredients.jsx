@@ -1,14 +1,30 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { loadIngredients } from '../../services/burger-ingredients/actions';
+import {
+  getIngredients,
+  // getIngredientsError,
+  // getIngredientsLoading,
+} from '../../services/burger-ingredients/reducer';
 import { IngredientDetails } from '../ingredient-details/ingredien-details';
 import { Modal } from '../modals/modal';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
+  //список ингредиентов
+  const dispatch = useDispatch();
+  const ingredients = useSelector(getIngredients);
+
+  useEffect(() => {
+    dispatch(loadIngredients());
+  }, []);
+
+  //модальное окно ингредиента
   const [visible, setVisible] = useState(false);
   const [currentIngredient, setCurrentIngredient] = useState({});
 
@@ -24,6 +40,7 @@ export const BurgerIngredients = ({ ingredients }) => {
     setVisible(true);
   };
 
+  //фильтрация ингредиентов по типам
   const filterIngredientsByTypes = (ingredients) => {
     const ingredientsByTypes = {};
     ingredients.forEach((ingredient) => {
@@ -94,7 +111,6 @@ export const BurgerIngredients = ({ ingredients }) => {
                   <IngredientCard
                     key={ingredient._id}
                     ingredient={ingredient}
-                    count={1}
                     onClick={() => {
                       setCurrentIngredient(ingredient);
                       handleOpenIngredientDetails();

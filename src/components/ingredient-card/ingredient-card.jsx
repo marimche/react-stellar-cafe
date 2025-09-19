@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './ingredient-card.module.css';
 
-export const IngredientCard = ({ ingredient, count, onClick }) => {
+export const IngredientCard = ({ ingredient, onClick }) => {
   return (
     <div key={ingredient._id} className={styles.igredient_details} onClick={onClick}>
       <img className={styles.image} src={ingredient.image} alt={ingredient.name}></img>
@@ -14,10 +14,10 @@ export const IngredientCard = ({ ingredient, count, onClick }) => {
       <div className={styles.name}>
         <p className="text text_type_main-default">{ingredient.name}</p>
       </div>
-      {count > 0 && (
+      {ingredient.count > 0 && (
         <Counter
           className={styles.counter}
-          count={count}
+          count={ingredient.count}
           size="small"
           extraClass="m-1"
         />

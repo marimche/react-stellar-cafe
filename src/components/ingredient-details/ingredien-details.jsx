@@ -1,8 +1,25 @@
+import { Button } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+
+import { addIngredient, updateBun } from '../../services/burger-constructor/actions';
+import { increaseIngredientCount } from '../../services/burger-ingredients/actions';
 
 import styles from './ingredient-details.module.css';
 
 export const IngredientDetails = ({ currentIngredient }) => {
+  const dispatch = useDispatch();
+
+  const addToConstructor = (currentIngredient) => {
+    if (currentIngredient.type === 'bun') {
+      dispatch(updateBun(currentIngredient));
+    } else {
+      dispatch(addIngredient(currentIngredient));
+    }
+  };
+  const increaseCount = (currentIngredient) => {
+    dispatch(increaseIngredientCount(currentIngredient));
+  };
   return (
     <>
       <div className={styles.image_container}>
@@ -36,6 +53,18 @@ export const IngredientDetails = ({ currentIngredient }) => {
             {currentIngredient.carbohydrates}
           </p>
         </div>
+        <Button
+          extraClass="mr-10"
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => {
+            addToConstructor(currentIngredient);
+            increaseCount(currentIngredient);
+          }}
+        >
+          Добавить ингредиент
+        </Button>
       </div>
     </>
   );
