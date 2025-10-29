@@ -2,16 +2,19 @@ import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  DragIcon,
 } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { useDispatch, useSelector } from 'react-redux';
 
+import transparentImage from '../../images/transparent.png';
+import { addIngredient } from '../../services/burger-constructor/actions';
 import {
   getSelectedIngredients,
   getSelectedBun,
 } from '../../services/burger-constructor/reducer';
+import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 import { Modal } from '../modals/modal';
 import { OrderDetails } from '../order-details/order-details';
 
@@ -22,7 +25,7 @@ export const BurgerConstructor = ({ ingredients }) => {
   const selectedIngredients = useSelector(getSelectedIngredients);
   const bun = useSelector(getSelectedBun);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [visible, setVisible] = useState(false);
 
@@ -34,8 +37,19 @@ export const BurgerConstructor = ({ ingredients }) => {
     setVisible(false);
   };
 
+  const handleDrop = (itemId) => {
+    dispatch(addIngredient(itemId));
+  };
+
+  const [, dropTarget] = useDrop({
+    accept: 'container',
+    drop(item) {
+      handleDrop(item);
+    },
+  });
+
   return (
-    <section className={styles.burger_constructor} id="react-modals">
+    <section className={styles.burger_constructor} id="react-modals" ref={dropTarget}>
       {ingredients?.length > 0 && (
         <div>
           <div className={styles.burger_ingredients}>
@@ -45,7 +59,7 @@ export const BurgerConstructor = ({ ingredients }) => {
                   type="top"
                   text="Выберите булки"
                   isLocked={true}
-                  thumbnail={' '}
+                  thumbnail={transparentImage}
                 />
               ) : (
                 <ConstructorElement
@@ -59,33 +73,30 @@ export const BurgerConstructor = ({ ingredients }) => {
             </div>
             <div className={styles.internal_ingredients}>
               {selectedIngredients.length > 0 ? (
-                selectedIngredients.map((ingredient) => {
+                selectedIngredients.map((ingredient, index) => {
                   return (
-                    <div key={ingredient._id + Math.random()}>
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
-                      />
-                    </div>
+                    <BurgerConstructorItem
+                      ingredient={ingredient}
+                      index={index}
+                      key={ingredient.id}
+                    />
                   );
                 })
               ) : (
                 <ConstructorElement
                   text="Выберите начинку"
                   isLocked={undefined}
-                  thumbnail={' '}
+                  thumbnail={transparentImage}
                 />
               )}
             </div>
             <div className="ml-6">
               {bun === null ? (
                 <ConstructorElement
-                  type="top"
+                  type="bottom"
                   text="Выберите булки"
                   isLocked={true}
-                  thumbnail={' '}
+                  thumbnail={transparentImage}
                 />
               ) : (
                 <ConstructorElement

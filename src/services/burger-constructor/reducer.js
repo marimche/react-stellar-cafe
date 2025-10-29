@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { addIngredient, removeIngredient, updateBun, countTotalPrice } from './actions';
+import {
+  addIngredient,
+  sortIngredient,
+  removeIngredient,
+  updateBun,
+  countTotalPrice,
+  returnToInitialState,
+} from './actions';
 
 const initialState = {
   selectedBun: null,
@@ -18,26 +25,47 @@ export const constructorSlice = createSlice({
     getTotalPrice: (state) => state.totalPrice,
   },
 
-  //действия (actions):
-  //добавление ингредиента
-  //удаление ингредиента
-  //замена булки
   extraReducers: (builder) => {
     builder
       .addCase(addIngredient, (state, action) => {
-        state.selectedIngredients.push(action.payload);
-        // добавить ингредиент в массив
-        // обновить в state.ingredients поле count
+        if (action.payload?.type !== 'bun') {
+          return {
+            ...state,
+            selectedIngredients: [...state.selectedIngredients, action.payload],
+          };
+        } else {
+          return {
+            ...state,
+            selectedBun: action.payload,
+          };
+        }
+      })
+      .addCase(sortIngredient, (state, action) => {
+        const selectedIngredients = [...state.selectedIngredients];
+        selectedIngredients.splice(
+          action.payload.to,
+          0,
+          selectedIngredients.splice(action.payload.from, 1)[0]
+        );
+        return {
+          ...state,
+          selectedIngredients,
+        };
       })
       .addCase(removeIngredient, (state, action) => {
-        console.log(action.payload);
-        // удалить из списка ингредиент один (если несколько)
-        // обновить в state.ingredients поле count
+        const filteredIngredients = state.selectedIngredients.filter(
+          (ingredient) => ingredient._id !== action.payload._id
+        );
+        return {
+          ...state,
+          selectedIngredients: filteredIngredients,
+        };
       })
       .addCase(updateBun, (state, action) => {
         state.selectedBun = action.payload;
-        //присвоить selectedBun новное значение
-        // обновить в state.ingredients.ingredient поле count
+      })
+      .addCase(returnToInitialState, () => {
+        return initialState;
       })
       .addCase(countTotalPrice, (state, action) => {
         console.log(action.payload);

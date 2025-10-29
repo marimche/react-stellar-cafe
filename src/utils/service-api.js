@@ -5,7 +5,8 @@ const getResponse = (res) => {
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-const getIngredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
+// const getIngredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
+const getIngredientsUrl = 'https://norma.education-services.ru/api/ingredients';
 
 export const getIngredients = () => {
   return fetch(getIngredientsUrl)
@@ -17,7 +18,7 @@ export const getIngredients = () => {
 
 const createOrderUrl = 'https://norma.nomoreparties.space/api/orders';
 
-export const createOrder = (ingredientsList) => {
+export const sendBurgerDetails = (ingredientsList) => {
   return fetch(createOrderUrl, {
     method: 'POST',
     body: JSON.stringify({

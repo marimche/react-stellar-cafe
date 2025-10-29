@@ -1,16 +1,22 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { loadIngredients } from '../../services/burger-ingredients/actions';
 import {
-  getIngredients,
-  // getIngredientsError,
-  // getIngredientsLoading,
+  getIngredients, // getIngredientsError, getIngredientsLoading,
 } from '../../services/burger-ingredients/reducer';
-import { IngredientDetails } from '../ingredient-details/ingredien-details';
+import {
+  getIngredient,
+  closeIngredient,
+} from '../../services/ingredient-details/actions';
+import {
+  getVisibleOption,
+  getIngredientDetails,
+} from '../../services/ingredient-details/reducer';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modals/modal';
 
 import styles from './burger-ingredients.module.css';
@@ -20,24 +26,23 @@ export const BurgerIngredients = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector(getIngredients);
 
+  const visible = useSelector(getVisibleOption);
+  const currentIngredient = useSelector(getIngredientDetails);
+
   useEffect(() => {
     dispatch(loadIngredients());
   }, []);
-
-  //модальное окно ингредиента
-  const [visible, setVisible] = useState(false);
-  const [currentIngredient, setCurrentIngredient] = useState({});
 
   const bunRef = useRef(null);
   const mainRef = useRef(null);
   const sauceRef = useRef(null);
 
-  const handleCloseIngredientDetails = () => {
-    setVisible(false);
+  const handleOpenIngredientDetails = (ingredient) => {
+    dispatch(getIngredient(ingredient));
   };
 
-  const handleOpenIngredientDetails = () => {
-    setVisible(true);
+  const handleCloseIngredientDetails = () => {
+    dispatch(closeIngredient());
   };
 
   //фильтрация ингредиентов по типам
@@ -97,8 +102,7 @@ export const BurgerIngredients = () => {
                     key={ingredient._id}
                     ingredient={ingredient}
                     onClick={() => {
-                      setCurrentIngredient(ingredient);
-                      handleOpenIngredientDetails();
+                      handleOpenIngredientDetails(ingredient);
                     }}
                   />
                 ))}
@@ -112,8 +116,7 @@ export const BurgerIngredients = () => {
                     key={ingredient._id}
                     ingredient={ingredient}
                     onClick={() => {
-                      setCurrentIngredient(ingredient);
-                      handleOpenIngredientDetails();
+                      handleOpenIngredientDetails(ingredient);
                     }}
                   />
                 ))}
@@ -127,8 +130,7 @@ export const BurgerIngredients = () => {
                     key={ingredient._id}
                     ingredient={ingredient}
                     onClick={() => {
-                      setCurrentIngredient(ingredient);
-                      handleOpenIngredientDetails();
+                      handleOpenIngredientDetails(ingredient);
                     }}
                   />
                 ))}

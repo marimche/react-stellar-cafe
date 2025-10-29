@@ -4,6 +4,7 @@ import {
   loadIngredients,
   increaseIngredientCount,
   decreaseIngredientCount,
+  updateBunCount,
 } from './actions';
 
 const initialState = {
@@ -47,8 +48,19 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(decreaseIngredientCount, (state, action) => {
         state.ingredients = state.ingredients.map((ingredient) => {
-          if (ingredient.id === action.payload.id) {
+          if (ingredient._id === action.payload._id) {
             return { ...ingredient, count: action.payload.count - 1 };
+          }
+          return ingredient;
+        });
+      })
+      .addCase(updateBunCount, (state, action) => {
+        state.ingredients = state.ingredients.map((ingredient) => {
+          if (ingredient.type === 'bun') {
+            if (ingredient._id === action.payload._id) {
+              return { ...ingredient, count: action.payload.count + 2 };
+            }
+            return { ...ingredient, count: 0 };
           }
           return ingredient;
         });

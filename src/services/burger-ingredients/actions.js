@@ -26,3 +26,12 @@ export const decreaseIngredientCount = createAction(
     };
   }
 );
+
+export const updateBunCount = createAction(
+  'ingredients/updateBunCount',
+  (ingredient) => {
+    return {
+      payload: ingredient,
+    };
+  }
+);

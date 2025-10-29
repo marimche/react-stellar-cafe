@@ -8,13 +8,7 @@ import { configureStore } from './services/store';
 
 import './index.css';
 
-const store = configureStore({
-  ingredients: {
-    ingredients: [],
-    loading: true,
-    error: null,
-  },
-});
+const store = configureStore();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

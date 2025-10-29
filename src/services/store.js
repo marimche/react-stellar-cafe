@@ -3,6 +3,7 @@ import { compose } from 'redux';
 
 import { constructorSlice } from './burger-constructor/reducer';
 import { ingredientsSlice } from './burger-ingredients/reducer';
+import { ingredientDetailsSlice } from './ingredient-details/reducer';
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -11,7 +12,11 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers();
 
-const rootReducer = combineSlices(ingredientsSlice, constructorSlice);
+const rootReducer = combineSlices(
+  ingredientsSlice,
+  constructorSlice,
+  ingredientDetailsSlice
+);
 
 export const configureStore = (initialState) => {
   return createStore(
