@@ -8,12 +8,16 @@ import { useState, useMemo } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addIngredient } from '../../services/burger-constructor/actions';
+import {
+  addIngredient,
+  returnToInitialState,
+} from '../../services/burger-constructor/actions';
 import {
   getSelectedIngredients,
   getSelectedBun,
 } from '../../services/burger-constructor/reducer';
 import { createOrder } from '../../services/order-details/actions';
+import { getOrderNumber } from '../../services/order-details/reducer';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 import { Modal } from '../modals/modal';
 import { OrderDetails } from '../order-details/order-details';
@@ -34,8 +38,12 @@ export const BurgerConstructor = ({ ingredients }) => {
     setVisible(true);
   };
 
+  const order = useSelector(getOrderNumber);
   const handleCloseOrderDetails = () => {
     setVisible(false);
+    if (order) {
+      dispatch(returnToInitialState());
+    }
   };
 
   const handleDrop = (itemId) => {

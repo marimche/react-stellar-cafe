@@ -6,7 +6,6 @@ import {
   removeIngredient,
   countTotalPrice,
   returnToInitialState,
-  createOrder,
 } from './actions';
 
 const initialState = {
@@ -60,9 +59,6 @@ export const constructorSlice = createSlice({
             ...state.selectedIngredients.slice(action.payload + 1),
           ],
         };
-      })
-      .addCase(createOrder, () => {
-        return initialState;
       })
       .addCase(returnToInitialState, () => {
         return initialState;

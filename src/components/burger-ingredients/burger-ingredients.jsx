@@ -1,7 +1,7 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -9,9 +9,7 @@ import {
   getSelectedBun,
 } from '../../services/burger-constructor/reducer';
 import { loadIngredients } from '../../services/burger-ingredients/actions';
-import {
-  getIngredients, // getIngredientsError, getIngredientsLoading,
-} from '../../services/burger-ingredients/reducer';
+import { getIngredients } from '../../services/burger-ingredients/reducer';
 import {
   getIngredient,
   closeIngredient,
@@ -26,7 +24,6 @@ import { Modal } from '../modals/modal';
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients = () => {
-  //список ингредиентов
   const dispatch = useDispatch();
   const ingredients = useSelector(getIngredients);
 
@@ -37,9 +34,37 @@ export const BurgerIngredients = () => {
     dispatch(loadIngredients());
   }, []);
 
+  const listRef = useRef(null);
   const bunRef = useRef(null);
   const mainRef = useRef(null);
   const sauceRef = useRef(null);
+
+  const [currentTab, setCurrentTab] = useState('bun');
+
+  const handleScroll = () => {
+    const topList = listRef.current.getBoundingClientRect();
+    const topBun = bunRef.current.getBoundingClientRect();
+    const topMain = mainRef.current.getBoundingClientRect();
+    const topSauce = sauceRef.current.getBoundingClientRect();
+
+    const diff = {
+      [bunRef.current.id]: Math.abs(topBun.top - topList.top),
+      [mainRef.current.id]: Math.abs(topMain.top - topList.top),
+      [sauceRef.current.id]: Math.abs(topSauce.top - topList.top),
+    };
+
+    let key = '';
+    let minDiff = Math.abs(topSauce.bottom - topList.top);
+    for (let item in diff) {
+      if (diff[item] < minDiff) {
+        minDiff = diff[item];
+        key = item;
+      }
+    }
+    if (key && key !== currentTab) {
+      setCurrentTab(key);
+    }
+  };
 
   const handleOpenIngredientDetails = (ingredient) => {
     dispatch(getIngredient(ingredient));
@@ -49,7 +74,6 @@ export const BurgerIngredients = () => {
     dispatch(closeIngredient());
   };
 
-  //фильтрация ингредиентов по типам
   const filterIngredientsByTypes = (ingredients) => {
     const ingredientsByTypes = {};
     ingredients.forEach((ingredient) => {
@@ -63,7 +87,6 @@ export const BurgerIngredients = () => {
 
   const ingredientsByTypes = filterIngredientsByTypes(ingredients);
 
-  //для счетчика
   const selectedIngredients = useSelector(getSelectedIngredients);
   const bun = useSelector(getSelectedBun);
 
@@ -88,6 +111,7 @@ export const BurgerIngredients = () => {
         <ul className={styles.menu}>
           <Tab
             value="bun"
+            active={currentTab === 'bun'}
             onClick={() => {
               bunRef.current.scrollIntoView({ behavior: 'smooth' });
             }}
@@ -96,7 +120,7 @@ export const BurgerIngredients = () => {
           </Tab>
           <Tab
             value="main"
-            active={false}
+            active={currentTab === 'main'}
             onClick={() => {
               mainRef.current.scrollIntoView({ behavior: 'smooth' });
             }}
@@ -105,7 +129,7 @@ export const BurgerIngredients = () => {
           </Tab>
           <Tab
             value="sauce"
-            active={false}
+            active={currentTab === 'sauce'}
             onClick={() => {
               sauceRef.current.scrollIntoView({ behavior: 'smooth' });
             }}
@@ -115,7 +139,7 @@ export const BurgerIngredients = () => {
         </ul>
       </nav>
       {ingredients?.length > 0 && (
-        <div className={`${styles.items} mt-10`}>
+        <div className={`${styles.items} mt-10`} onScroll={handleScroll} ref={listRef}>
           <ul className={styles.list}>
             <li id="bun" ref={bunRef}>
               <p className="text text_type_main-medium">Булки</p>
