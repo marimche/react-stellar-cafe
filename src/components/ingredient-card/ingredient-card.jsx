@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd';
 
 import styles from './ingredient-card.module.css';
 
-export const IngredientCard = ({ ingredient, onClick }) => {
+export const IngredientCard = ({ ingredient, onClick, count }) => {
   const [, dragRef] = useDrag({
     type: 'container',
     item: ingredient,
@@ -24,10 +24,10 @@ export const IngredientCard = ({ ingredient, onClick }) => {
       <div className={styles.name}>
         <p className="text text_type_main-default">{ingredient.name}</p>
       </div>
-      {ingredient.count > 0 && (
+      {count > 0 && (
         <Counter
           className={styles.counter}
-          count={ingredient.count}
+          count={count}
           size="small"
           extraClass="m-1"
         />

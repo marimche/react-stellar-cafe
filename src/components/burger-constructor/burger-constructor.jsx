@@ -4,16 +4,16 @@ import {
   CurrencyIcon,
 } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import transparentImage from '../../images/transparent.png';
 import { addIngredient } from '../../services/burger-constructor/actions';
 import {
   getSelectedIngredients,
   getSelectedBun,
 } from '../../services/burger-constructor/reducer';
+import { createOrder } from '../../services/order-details/actions';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 import { Modal } from '../modals/modal';
 import { OrderDetails } from '../order-details/order-details';
@@ -21,7 +21,6 @@ import { OrderDetails } from '../order-details/order-details';
 import styles from './burger-constructor.module.css';
 
 export const BurgerConstructor = ({ ingredients }) => {
-  //список выбранных ингредиентов
   const selectedIngredients = useSelector(getSelectedIngredients);
   const bun = useSelector(getSelectedBun);
 
@@ -30,6 +29,8 @@ export const BurgerConstructor = ({ ingredients }) => {
   const [visible, setVisible] = useState(false);
 
   const handleOpenOrderDetails = () => {
+    const ingredienLIdList = selectedIngredients.map((ingredient) => ingredient._id);
+    dispatch(createOrder([bun._id, ...ingredienLIdList, bun._id]));
     setVisible(true);
   };
 
@@ -48,6 +49,13 @@ export const BurgerConstructor = ({ ingredients }) => {
     },
   });
 
+  const price = useMemo(() => {
+    return (
+      (bun ? bun.price * 2 : 0) +
+      selectedIngredients.reduce((sum, value) => sum + value.price, 0)
+    );
+  }, [bun, selectedIngredients]);
+
   return (
     <section className={styles.burger_constructor} id="react-modals" ref={dropTarget}>
       {ingredients?.length > 0 && (
@@ -55,12 +63,11 @@ export const BurgerConstructor = ({ ingredients }) => {
           <div className={styles.burger_ingredients}>
             <div className="ml-6">
               {bun === null ? (
-                <ConstructorElement
-                  type="top"
-                  text="Выберите булки"
-                  isLocked={true}
-                  thumbnail={transparentImage}
-                />
+                <div
+                  className={`${styles.temporary_element_top} text text_type_main-default`}
+                >
+                  Выберите булки
+                </div>
               ) : (
                 <ConstructorElement
                   type="top"
@@ -83,21 +90,20 @@ export const BurgerConstructor = ({ ingredients }) => {
                   );
                 })
               ) : (
-                <ConstructorElement
-                  text="Выберите начинку"
-                  isLocked={undefined}
-                  thumbnail={transparentImage}
-                />
+                <div
+                  className={`${styles.temporary_element_middle} ml-5 text text_type_main-default`}
+                >
+                  Выберите начинку
+                </div>
               )}
             </div>
             <div className="ml-6">
               {bun === null ? (
-                <ConstructorElement
-                  type="bottom"
-                  text="Выберите булки"
-                  isLocked={true}
-                  thumbnail={transparentImage}
-                />
+                <div
+                  className={`${styles.temporary_element_bottom} text text_type_main-default`}
+                >
+                  Выберите булки
+                </div>
               ) : (
                 <ConstructorElement
                   type="bottom"
@@ -111,7 +117,7 @@ export const BurgerConstructor = ({ ingredients }) => {
           </div>
           <div className={`${styles.total_price} mt-10`}>
             <div className={styles.price}>
-              <p className="text text_type_main-large">610</p>
+              <p className="text text_type_main-large">{price}</p>
               <CurrencyIcon type="primary" />
             </div>
             <Button
@@ -121,7 +127,7 @@ export const BurgerConstructor = ({ ingredients }) => {
               size="large"
               onClick={handleOpenOrderDetails}
             >
-              Нажми на меня
+              Создать заказ
             </Button>
             <div className={styles.modal_container}>
               {visible && (

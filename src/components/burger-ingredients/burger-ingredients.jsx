@@ -1,9 +1,13 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import {
+  getSelectedIngredients,
+  getSelectedBun,
+} from '../../services/burger-constructor/reducer';
 import { loadIngredients } from '../../services/burger-ingredients/actions';
 import {
   getIngredients, // getIngredientsError, getIngredientsLoading,
@@ -59,6 +63,25 @@ export const BurgerIngredients = () => {
 
   const ingredientsByTypes = filterIngredientsByTypes(ingredients);
 
+  //для счетчика
+  const selectedIngredients = useSelector(getSelectedIngredients);
+  const bun = useSelector(getSelectedBun);
+
+  const counters = useMemo(() => {
+    const countById = {};
+    selectedIngredients.forEach((ingredient) => {
+      if (!countById[ingredient._id]) {
+        countById[ingredient._id] = 1;
+      } else {
+        countById[ingredient._id]++;
+      }
+    });
+    if (bun) {
+      countById[bun._id] = 2;
+    }
+    return countById;
+  }, [bun, selectedIngredients]);
+
   return (
     <section className={styles.burger_ingredients}>
       <nav>
@@ -101,6 +124,7 @@ export const BurgerIngredients = () => {
                   <IngredientCard
                     key={ingredient._id}
                     ingredient={ingredient}
+                    count={counters[ingredient._id]}
                     onClick={() => {
                       handleOpenIngredientDetails(ingredient);
                     }}
@@ -115,6 +139,7 @@ export const BurgerIngredients = () => {
                   <IngredientCard
                     key={ingredient._id}
                     ingredient={ingredient}
+                    count={counters[ingredient._id]}
                     onClick={() => {
                       handleOpenIngredientDetails(ingredient);
                     }}
@@ -129,6 +154,7 @@ export const BurgerIngredients = () => {
                   <IngredientCard
                     key={ingredient._id}
                     ingredient={ingredient}
+                    count={counters[ingredient._id]}
                     onClick={() => {
                       handleOpenIngredientDetails(ingredient);
                     }}

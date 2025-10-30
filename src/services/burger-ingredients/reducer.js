@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import {
-  loadIngredients,
-  increaseIngredientCount,
-  decreaseIngredientCount,
-  updateBunCount,
-} from './actions';
+// import { loadIngredients, updateBunCount } from './actions';
+import { loadIngredients } from './actions';
 
 const initialState = {
   ingredients: [],
@@ -34,39 +30,16 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(loadIngredients.fulfilled, (state, action) => {
         state.ingredients = action.payload?.data?.map((ingredient) => {
-          return { ...ingredient, count: 0 };
+          return { ...ingredient };
         });
         state.loading = false;
-      })
-      .addCase(increaseIngredientCount, (state, action) => {
-        state.ingredients = state.ingredients.map((ingredient) => {
-          if (ingredient._id === action.payload._id) {
-            return { ...ingredient, count: action.payload.count + 1 };
-          }
-          return ingredient;
-        });
-      })
-      .addCase(decreaseIngredientCount, (state, action) => {
-        state.ingredients = state.ingredients.map((ingredient) => {
-          if (ingredient._id === action.payload._id) {
-            return { ...ingredient, count: action.payload.count - 1 };
-          }
-          return ingredient;
-        });
-      })
-      .addCase(updateBunCount, (state, action) => {
-        state.ingredients = state.ingredients.map((ingredient) => {
-          if (ingredient.type === 'bun') {
-            if (ingredient._id === action.payload._id) {
-              return { ...ingredient, count: action.payload.count + 2 };
-            }
-            return { ...ingredient, count: 0 };
-          }
-          return ingredient;
-        });
       });
   },
 });
 
-export const { getIngredients, getIngredientsError, getIngredientsLoading } =
-  ingredientsSlice.selectors;
+export const {
+  getIngredients,
+  getIngredientsError,
+  getIngredientsLoading,
+  getIngredientCount,
+} = ingredientsSlice.selectors;

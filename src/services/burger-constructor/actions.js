@@ -27,20 +27,23 @@ export const sortIngredient = createAction(
 
 export const removeIngredient = createAction(
   'burger-constructor/removeIngredient',
+  (index) => {
+    return {
+      payload: index,
+    };
+  }
+);
+
+export const countTotalPrice = createAction('burger-constructor/countTotalPrice');
+
+export const createOrder = createAction(
+  'burger-constructor/createOrder',
   (ingredient) => {
     return {
       payload: ingredient,
     };
   }
 );
-
-export const updateBun = createAction('burger-constructor/updateBun', (newBun) => {
-  return {
-    payload: newBun,
-  };
-});
-
-export const countTotalPrice = createAction('burger-constructor/countTotalPrice');
 
 export const returnToInitialState = createAction(
   'burger-constructor/returnToInitialState'

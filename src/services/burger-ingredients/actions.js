@@ -9,29 +9,20 @@ export const loadIngredients = createAsyncThunk(
   }
 );
 
-export const increaseIngredientCount = createAction(
-  'ingredients/increaseIngredientCount',
+export const getIngredientCount = createAction(
+  'ingredients/getIngredientCount',
   (ingredient) => {
     return {
-      payload: ingredient,
+      payload: ingredient._id,
     };
   }
 );
 
-export const decreaseIngredientCount = createAction(
-  'ingredients/decreaseIngredientCount',
-  (ingredient) => {
-    return {
-      payload: ingredient,
-    };
-  }
-);
-
-export const updateBunCount = createAction(
-  'ingredients/updateBunCount',
-  (ingredient) => {
-    return {
-      payload: ingredient,
-    };
-  }
-);
+// export const updateBunCount = createAction(
+//   'ingredients/updateBunCount',
+//   (ingredient) => {
+//     return {
+//       payload: ingredient,
+//     };
+//   }
+// );

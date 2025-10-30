@@ -16,11 +16,15 @@ export const getIngredients = () => {
     });
 };
 
-const createOrderUrl = 'https://norma.nomoreparties.space/api/orders';
+// const createOrderUrl = 'https://norma.nomoreparties.space/api/orders';
+const createOrderUrl = 'https://norma.education-services.ru/api/orders';
 
 export const sendBurgerDetails = (ingredientsList) => {
   return fetch(createOrderUrl, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
     body: JSON.stringify({
       ingredients: ingredientsList,
     }),

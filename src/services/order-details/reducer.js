@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-export const ingredientsSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'order-details',
   initialState,
   reducers: {},
@@ -17,7 +17,7 @@ export const ingredientsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createOrder.pending, (state) => { 
+      .addCase(createOrder.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -26,12 +26,10 @@ export const ingredientsSlice = createSlice({
         state.error = action.error?.message || 'Unknown error';
       })
       .addCase(createOrder.fulfilled, (state, action) => {
-        state.ingredients = action.payload?.data?.map((ingredient) => {
-          return { ...ingredient, count: 0 };
-        });
+        state.orderNumber = action.payload?.order?.number;
         state.loading = false;
       });
   },
 });
 
-export const { getOrederNumber } = ingredientsSlice.selectors;
+export const { getOrderNumber } = orderSlice.selectors;

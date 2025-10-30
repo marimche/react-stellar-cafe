@@ -4,9 +4,9 @@ import {
   addIngredient,
   sortIngredient,
   removeIngredient,
-  updateBun,
   countTotalPrice,
   returnToInitialState,
+  createOrder,
 } from './actions';
 
 const initialState = {
@@ -53,16 +53,16 @@ export const constructorSlice = createSlice({
         };
       })
       .addCase(removeIngredient, (state, action) => {
-        const filteredIngredients = state.selectedIngredients.filter(
-          (ingredient) => ingredient._id !== action.payload._id
-        );
         return {
           ...state,
-          selectedIngredients: filteredIngredients,
+          selectedIngredients: [
+            ...state.selectedIngredients.slice(0, action.payload),
+            ...state.selectedIngredients.slice(action.payload + 1),
+          ],
         };
       })
-      .addCase(updateBun, (state, action) => {
-        state.selectedBun = action.payload;
+      .addCase(createOrder, () => {
+        return initialState;
       })
       .addCase(returnToInitialState, () => {
         return initialState;
