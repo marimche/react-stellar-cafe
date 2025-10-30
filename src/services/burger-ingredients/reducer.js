@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// import { loadIngredients, updateBunCount } from './actions';
 import { loadIngredients } from './actions';
 
 const initialState = {

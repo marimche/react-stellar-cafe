@@ -4,14 +4,12 @@ import {
   addIngredient,
   sortIngredient,
   removeIngredient,
-  countTotalPrice,
   returnToInitialState,
 } from './actions';
 
 const initialState = {
   selectedBun: null,
   selectedIngredients: [],
-  totalPrice: 0,
 };
 
 export const constructorSlice = createSlice({
@@ -21,7 +19,6 @@ export const constructorSlice = createSlice({
   selectors: {
     getSelectedBun: (state) => state.selectedBun,
     getSelectedIngredients: (state) => state.selectedIngredients,
-    getTotalPrice: (state) => state.totalPrice,
   },
 
   extraReducers: (builder) => {
@@ -62,15 +59,7 @@ export const constructorSlice = createSlice({
       })
       .addCase(returnToInitialState, () => {
         return initialState;
-      })
-      .addCase(countTotalPrice, (state, action) => {
-        console.log(action.payload);
-        //посчитать стоимость товаров в selectedIngredients + selectedBun
       });
-    // .addMatcher(isRejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.error?.message || 'Unknown error';
-    // });
   },
 });
 

@@ -34,8 +34,6 @@ export const removeIngredient = createAction(
   }
 );
 
-export const countTotalPrice = createAction('burger-constructor/countTotalPrice');
-
 export const createOrder = createAction(
   'burger-constructor/createOrder',
   (ingredient) => {
