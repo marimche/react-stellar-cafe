@@ -1,3 +1,5 @@
+const BASE_URL = 'https://norma.education-services.ru/api';
+
 const getResponse = (res) => {
   if (res.ok) {
     return res.json();
@@ -5,8 +7,7 @@ const getResponse = (res) => {
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-// const getIngredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
-const getIngredientsUrl = 'https://norma.education-services.ru/api/ingredients';
+const getIngredientsUrl = `${BASE_URL}/ingredients`;
 
 export const getIngredients = () => {
   return fetch(getIngredientsUrl)
@@ -16,8 +17,7 @@ export const getIngredients = () => {
     });
 };
 
-// const createOrderUrl = 'https://norma.nomoreparties.space/api/orders';
-const createOrderUrl = 'https://norma.education-services.ru/api/orders';
+const createOrderUrl = `${BASE_URL}/orders`;
 
 export const sendBurgerDetails = (ingredientsList) => {
   return fetch(createOrderUrl, {
