@@ -1,26 +1,25 @@
-const BASE_URL = 'https://norma.education-services.ru/api';
-
-const getResponse = (res) => {
+const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-const getIngredientsUrl = `${BASE_URL}/ingredients`;
-
-export const getIngredients = () => {
-  return fetch(getIngredientsUrl)
-    .then((res) => getResponse(res))
-    .catch((error) => {
-      throw error;
-    });
+const request = (endpoint, options) => {
+  const BASE_URL = 'https://norma.education-services.ru/api';
+  return fetch(`${BASE_URL}${endpoint}`, options).then((res) => checkResponse(res));
 };
 
-const createOrderUrl = `${BASE_URL}/orders`;
+// запрос списка ингредиентов
+const getIngredientsEndpoint = `/ingredients`;
+export const getIngredients = () => {
+  return request(getIngredientsEndpoint);
+};
 
+// создание заказа
+const createOrderEndpoint = `/orders`;
 export const sendBurgerDetails = (ingredientsList) => {
-  return fetch(createOrderUrl, {
+  return request(createOrderEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -28,5 +27,5 @@ export const sendBurgerDetails = (ingredientsList) => {
     body: JSON.stringify({
       ingredients: ingredientsList,
     }),
-  }).then((res) => getResponse(res));
+  });
 };
