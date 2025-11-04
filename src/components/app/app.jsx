@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 
 import { loadIngredients } from '../../services/burger-ingredients/actions';
-import { getIngredients } from '../../services/burger-ingredients/reducer';
 
 import styles from './app.module.css';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const ingredients = useSelector(getIngredients);
 
   useEffect(() => {
     dispatch(loadIngredients());
@@ -29,7 +27,7 @@ export const App = () => {
       <main className={`${styles.main} pl-5 pr-5`}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
-          <BurgerConstructor ingredients={ingredients} />
+          <BurgerConstructor />
         </DndProvider>
       </main>
     </div>

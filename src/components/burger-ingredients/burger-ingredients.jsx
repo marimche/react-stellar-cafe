@@ -1,6 +1,5 @@
 import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -198,8 +197,4 @@ export const BurgerIngredients = () => {
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object),
 };
