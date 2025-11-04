@@ -37,7 +37,7 @@ export const IngredientCard = ({ ingredient, onClick, count }) => {
 };
 
 IngredientCard.propTypes = {
-  ingredient: PropTypes.object,
+  ingredient: PropTypes.object.isRequired,
   count: PropTypes.number,
   onClick: PropTypes.func,
 };
