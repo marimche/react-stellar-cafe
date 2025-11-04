@@ -7,7 +7,7 @@ const checkResponse = (res) => {
 
 const request = (endpoint, options) => {
   const BASE_URL = 'https://norma.education-services.ru/api';
-  return fetch(`${BASE_URL}${endpoint}`, options).then((res) => checkResponse(res));
+  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
 };
 
 // запрос списка ингредиентов
