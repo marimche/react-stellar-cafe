@@ -1,12 +1,16 @@
+import { useSelector } from 'react-redux';
+
 import doneImage from '../../images/done.svg';
+import { getOrderNumber } from '../../services/order-details/reducer';
 
 import styles from './order-details.module.css';
 
 export const OrderDetails = () => {
+  const order = useSelector(getOrderNumber);
   return (
     <>
       <div className="mt-15">
-        <p className={`${styles.text} text text_type_digits-large`}>034536</p>
+        <p className={`${styles.text} text text_type_digits-large`}>{order}</p>
       </div>
       <div className="mt-8">
         <p className={`${styles.text} text text_type_main-medium`}>

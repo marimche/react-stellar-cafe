@@ -17,7 +17,7 @@
   flex-direction: column;
   gap: 16px;
   overflow: auto;
-  height: 465px;
+  max-height: 465px;
 }
 
 .total_price {
@@ -43,4 +43,34 @@
 
 .modal_container {
   overflow: hidden;
+}
+
+.temporary_element_top {
+  background-color: var(--background-element);
+  max-width: 536px;
+  height: 80px;
+  border-radius: var(--top-constructor-item-border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.temporary_element_middle {
+  background-color: var(--background-element);
+  max-width: 536px;
+  height: 80px;
+  border-radius: var(--common-border-radius-s);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.temporary_element_bottom {
+  background-color: var(--background-element);
+  max-width: 536px;
+  height: 80px;
+  border-radius: var(--bottom-constructor-item-border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

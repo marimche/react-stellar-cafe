@@ -1,11 +1,21 @@
 import { CurrencyIcon, Counter } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { useDrag } from 'react-dnd';
 
 import styles from './ingredient-card.module.css';
 
-export const IngredientCard = ({ ingredient, count, onClick }) => {
+export const IngredientCard = ({ ingredient, onClick, count }) => {
+  const [, dragRef] = useDrag({
+    type: 'container',
+    item: ingredient,
+  });
   return (
-    <div key={ingredient._id} className={styles.igredient_details} onClick={onClick}>
+    <div
+      key={ingredient._id}
+      className={styles.igredient_details}
+      onClick={onClick}
+      ref={dragRef}
+    >
       <img className={styles.image} src={ingredient.image} alt={ingredient.name}></img>
       <div className={styles.price}>
         <p className="text text_type_digits-default">{ingredient.price}</p>
@@ -27,7 +37,7 @@ export const IngredientCard = ({ ingredient, count, onClick }) => {
 };
 
 IngredientCard.propTypes = {
-  ingredient: PropTypes.object,
+  ingredient: PropTypes.object.isRequired,
   count: PropTypes.number,
   onClick: PropTypes.func,
 };
