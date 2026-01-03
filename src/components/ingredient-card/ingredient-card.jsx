@@ -1,6 +1,7 @@
 import { CurrencyIcon, Counter } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
+// import { Link } from 'react-router-dom';
 
 import styles from './ingredient-card.module.css';
 
@@ -10,12 +11,12 @@ export const IngredientCard = ({ ingredient, onClick, count }) => {
     item: ingredient,
   });
   return (
-    <div
-      key={ingredient._id}
-      className={styles.igredient_details}
-      onClick={onClick}
-      ref={dragRef}
-    >
+    // <Link
+    //   key={ingredient._id}
+    //   to={`/ingredients/${ingredient._id}`}
+    //   className={styles.ingredient_details}
+    // >
+    <div onClick={onClick} ref={dragRef}>
       <img className={styles.image} src={ingredient.image} alt={ingredient.name}></img>
       <div className={styles.price}>
         <p className="text text_type_digits-default">{ingredient.price}</p>
@@ -33,6 +34,7 @@ export const IngredientCard = ({ ingredient, onClick, count }) => {
         />
       )}
     </div>
+    // </Link>
   );
 };
 

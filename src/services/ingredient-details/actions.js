@@ -9,6 +9,15 @@ export const getIngredient = createAction(
   }
 );
 
+export const setCurrentIngredient = createAction(
+  'ingredient-details/setCurrentIngredient',
+  (ingredient) => {
+    return {
+      payload: ingredient,
+    };
+  }
+);
+
 export const closeIngredient = createAction('ingredient-details/closeIngredient', () => {
   return {
     payload: {},

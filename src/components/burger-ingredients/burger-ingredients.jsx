@@ -2,6 +2,7 @@ import { IngredientCard } from '@/components/ingredient-card/ingredient-card';
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import {
   getSelectedIngredients,
@@ -23,6 +24,8 @@ import { Modal } from '../modals/modal';
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients = () => {
+  // const navigate = useNavigate();
+  let location = useLocation();
   const dispatch = useDispatch();
   const ingredients = useSelector(getIngredients);
 
@@ -63,14 +66,6 @@ export const BurgerIngredients = () => {
     if (key && key !== currentTab) {
       setCurrentTab(key);
     }
-  };
-
-  const handleOpenIngredientDetails = (ingredient) => {
-    dispatch(getIngredient(ingredient));
-  };
-
-  const handleCloseIngredientDetails = () => {
-    dispatch(closeIngredient());
   };
 
   const filterIngredientsByTypes = (ingredients) => {
@@ -148,9 +143,9 @@ export const BurgerIngredients = () => {
                     key={ingredient._id}
                     ingredient={ingredient}
                     count={counters[ingredient._id]}
-                    onClick={() => {
-                      handleOpenIngredientDetails(ingredient);
-                    }}
+                    // onClick={() => {
+                    //   handleOpenIngredientDetails(ingredient);
+                    // }}
                   />
                 ))}
               </div>
@@ -159,14 +154,16 @@ export const BurgerIngredients = () => {
               <p className="text text_type_main-medium">Начинки</p>
               <div className={styles.items}>
                 {ingredientsByTypes['main'].map((ingredient) => (
-                  <IngredientCard
+                  <Link
                     key={ingredient._id}
-                    ingredient={ingredient}
-                    count={counters[ingredient._id]}
-                    onClick={() => {
-                      handleOpenIngredientDetails(ingredient);
-                    }}
-                  />
+                    to={`/ingredients/${ingredient._id}`}
+                    state={{ backgroundLocation: location }}
+                  >
+                    <IngredientCard
+                      ingredient={ingredient}
+                      count={counters[ingredient._id]}
+                    />
+                  </Link>
                 ))}
               </div>
             </li>
@@ -174,14 +171,12 @@ export const BurgerIngredients = () => {
               <p className="text text_type_main-medium">Соусы</p>
               <div className={styles.items}>
                 {ingredientsByTypes['sauce'].map((ingredient) => (
-                  <IngredientCard
-                    key={ingredient._id}
-                    ingredient={ingredient}
-                    count={counters[ingredient._id]}
-                    onClick={() => {
-                      handleOpenIngredientDetails(ingredient);
-                    }}
-                  />
+                  <Link key={ingredient._id} to={`/ingredients/${ingredient._id}`}>
+                    <IngredientCard
+                      ingredient={ingredient}
+                      count={counters[ingredient._id]}
+                    />
+                  </Link>
                 ))}
               </div>
             </li>
@@ -190,7 +185,7 @@ export const BurgerIngredients = () => {
       )}
       <div className={styles.modal_container}>
         {visible && (
-          <Modal header="Детали ингредиента" onClose={handleCloseIngredientDetails}>
+          <Modal header="Детали ингредиента">
             <IngredientDetails currentIngredient={currentIngredient} />
           </Modal>
         )}

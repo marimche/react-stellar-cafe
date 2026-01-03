@@ -2,6 +2,7 @@ import { CloseIcon } from '@krgaa/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ModalOverlay } from './modal-overlay';
 
@@ -9,7 +10,8 @@ import styles from './modal.module.css';
 
 const modalRoot = document.getElementById('root');
 
-export const Modal = ({ children, onClose, header }) => {
+export const Modal = ({ children, header }) => {
+  let navigate = useNavigate();
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
 
@@ -22,6 +24,10 @@ export const Modal = ({ children, onClose, header }) => {
     if (event.key === 'Escape') {
       onClose();
     }
+  };
+
+  const onClose = () => {
+    navigate(-1);
   };
 
   return ReactDOM.createPortal(

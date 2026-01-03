@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getIngredient, closeIngredient } from './actions';
+import { getIngredient, closeIngredient, setCurrentIngredient } from './actions';
 
 const initialState = {
   currentIngredient: {},
@@ -27,6 +27,11 @@ export const ingredientDetailsSlice = createSlice({
     builder.addCase(closeIngredient, (state) => {
       state.currentIngredient = {};
       state.visible = false;
+    });
+    builder.addCase(setCurrentIngredient, (state, action) => {
+      console.log('ingredient, ', action.payload);
+      state.currentIngredient = action.payload;
+      state.visible = true;
     });
   },
 });
