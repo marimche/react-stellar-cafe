@@ -5,6 +5,7 @@ import { constructorSlice } from './burger-constructor/reducer';
 import { ingredientsSlice } from './burger-ingredients/reducer';
 import { ingredientDetailsSlice } from './ingredient-details/reducer';
 import { orderSlice } from './order-details/reducer';
+import { userAuthorizationSlice } from './user-authorization/reducer';
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -17,7 +18,8 @@ const rootReducer = combineSlices(
   ingredientsSlice,
   constructorSlice,
   ingredientDetailsSlice,
-  orderSlice
+  orderSlice,
+  userAuthorizationSlice
 );
 
 export const configureStore = (initialState) => {
